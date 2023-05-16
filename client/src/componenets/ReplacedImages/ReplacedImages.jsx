@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import style from "./ReplacedImages.module.less"
 import ImageBox from './ImageBox/ImageBox.jsx';
+import ImagesContext from '../../utils/ImagesContext';
 
 const ReplacedImages = () => {
-    const [images, setImages] = useState([])
+    const { replaceImages, setReplaceImages } = useContext(ImagesContext)
+
+    const inputFileRef = useRef(null);
+
     const onSelect = (e) => {
         if (e.target.files?.[0]) {
-            setImages([...images, URL.createObjectURL(e.target.files[0])])
+            setReplaceImages([...replaceImages, e.target.files[0]])
         }
     }
     const deleteImage = (index) => {
-        const temp = [...images]
+        const temp = [...replaceImages]
         temp.splice(index, 1)
-        setImages(temp)
+        setReplaceImages(temp)
     }
-    const imageBoxes = images.map((img, index) => <ImageBox key={index} image={img} index={index} deleteImage={deleteImage} />)
+    const imageBoxes = replaceImages.map((img, index) => <ImageBox key={index} image={img} index={index} deleteImage={deleteImage} />)
 
     return <div className={style.replacedImages}>
         {imageBoxes}
-        <label htmlFor="repImage">+</label>
-        <input id='repImage' className={style.fileInput} type='file' name='mainImage' accept='image/*' onChange={onSelect} />
+        <div className={style.addImageArea}>
+
+            <label className={style.label} htmlFor="repImage"><img className={style.addImage} src={require("../../assets/plus.png").default} alt="upload" />הוסף תמונה</label>
+            <input ref={inputFileRef} id='repImage' className={style.fileInput} type='file' name='mainImage' accept='image/*' onChange={onSelect} />
+        </div>
     </div>
 }
 

@@ -1,8 +1,44 @@
 @import (reference) "../App.module.less";
 
-.replacedImages{
+.replacedImages {
     display: flex;
-    .fileInput{
-        .fileInput;
+    flex-direction: row;
+
+    .addImageArea {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .label {
+            cursor: pointer;
+            border-radius: 13rem;
+            background-color: gray;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 0 0 0 10px;
+            padding: 50px;
+            aspect-ratio: 1 / 1;
+            box-sizing: border-box;
+            max-width: 100%;
+            max-height: 100%;
+
+        }
+
+        .fileInput {
+            .fileInput;
+        }
+    }
+
+
+
+    .addImage {
+        padding-right: 10px;
+        min-height: 30px;
+        max-width: 100%;
+        width: 30px;
+        cursor: pointer;
+        transform: rotateX(180deg);
     }
 }
