@@ -20,6 +20,13 @@ module.exports = {
                 }
             },
             {
+                test: /\.(ts|tsx)$/,
+                exclude: /node_modules/,
+                use: [{
+                    loader: "ts-loader",
+                }]
+            },
+            {
                 test: /\.svg$/,
                 use: ['@svgr/webpack'],
             },
@@ -35,9 +42,16 @@ module.exports = {
                 test: /\.less$/i,
                 use: [
                     // compiles Less to CSS
-                    "style-loader",
-                    "css-loader",
-                    "less-loader",
+                    { loader: "style-loader" },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                                localIdentName: '[name]_[local]--[hash:base64:5]'
+                            }
+                        }
+                    },
+                    { loader: "less-loader" },
                 ],
             },
 
