@@ -4,28 +4,62 @@
 .mainImage {
     border: 1px solid red;
     line-height: normal;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    .image {
+    // justify-content: center;
+    // align-items: center;
+
+    .withoutImg {
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
         height: 100%;
         width: 100%;
+
+        .fileInput {
+            .fileInput;
+        }
+
+        .inputLabel {
+            cursor: pointer;
+        }
+
+        .uploadImage {
+            min-height: 30px;
+            max-width: 100%;
+            width: 30px;
+            cursor: pointer;
+            transform: rotateX(180deg);
+        }
     }
 
-    .fileInput {
-        .fileInput;
+    .withImg {
+        display: flex;
+
+        // justify-content: center;
+        align-items: baseline;
+        height: 100%;
+        width: 100%;
+
+        .image {
+            // position: relative;
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            // z-index: -2;
+        }
+
+        .canvas {
+            // background-repeat: round;
+            // background-size: cover;
+            // z-index: -1;
+            height: -webkit-fill-available;
+            width: -webkit-fill-available;
+            aspect-ratio: 1 / 1;
+        }
     }
 
-    .inputLabel {
-        cursor: pointer;
-    }
 
-    .uploadImage {
-        min-height: 30px;
-        max-width: 100%;
-        width: 30px;
-        cursor: pointer;
-        transform: rotateX(180deg);
-    }
+
+
 }

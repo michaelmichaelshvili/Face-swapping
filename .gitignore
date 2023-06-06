@@ -1,3 +1,4 @@
 /node_modules
 Data/
 client/node_modules
+server/test.py

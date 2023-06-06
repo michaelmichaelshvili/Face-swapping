@@ -16,6 +16,7 @@ def extract_faces():
     # for i in range(len(req.files) - 1):
     #     images.append(req.files[f'replaceImage-{i}'])
     all_rects = extract_faces_from_images_files(req.files)
+    print(all_rects)
     return jsonify(all_rects)
 
 

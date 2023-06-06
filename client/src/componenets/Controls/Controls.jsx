@@ -1,16 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import Control from './Control/Control.jsx';
 import style from './Controls.module.less'
 import classnames from "classnames"
 import ImagesContext from '../../utils/ImagesContext.js';
-import { detectFaces } from '../../utils/ServerExecuter.js';
+import { detectFacesInServer } from '../../utils/ServerExecuter.js';
 
 const Controls = () => {
+    const { mainImage, replaceImages, setRectangles } = useContext(ImagesContext)
 
-    // const detectFaces = () => {
-
-    // }
-    const { mainImage, replaceImages } = useContext(ImagesContext)
+    const detectFaces = useCallback(async () => {
+        const rects = await detectFacesInServer(mainImage, replaceImages)
+        setRectangles(rects)
+    }, [mainImage, replaceImages])
 
 
     return <div className={style.controls}>
