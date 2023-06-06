@@ -53,8 +53,12 @@ const MainImage = () => {
         if (canvasRef.current) {
             const canvas = canvasRef.current;
             const context = canvas.getContext("2d");
-            context.canvas.width = window.innerWidth;
-            context.canvas.height = window.innerHeight;
+            // context.canvas.width = window.innerWidth;
+            // context.canvas.height = window.innerHeight;
+            canvas.style.width = "100%";
+            canvas.style.height = "100%";
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
             context.clearRect(0, 0, canvas.width, canvas.height);
             const roughCanvas = rough.canvas(canvas);
             rectangles.mainImage?.forEach(rect => {
