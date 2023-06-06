@@ -1,10 +1,10 @@
-import React, { useContext, useRef } from 'react';
+import React, { useCallback, useContext, useMemo, useRef } from 'react';
 import style from "./ReplacedImages.module.less"
 import ImageBox from './ImageBox/ImageBox.jsx';
 import ImagesContext from '../../utils/ImagesContext';
 
 const ReplacedImages = () => {
-    const { replaceImages, setReplaceImages } = useContext(ImagesContext)
+    const { replaceImages, setReplaceImages, rectangles } = useContext(ImagesContext)
 
     const inputFileRef = useRef(null);
 
@@ -18,7 +18,9 @@ const ReplacedImages = () => {
         temp.splice(index, 1)
         setReplaceImages(temp)
     }
-    const imageBoxes = replaceImages.map((img, index) => <ImageBox key={index} image={img} index={index} deleteImage={deleteImage} />)
+    const imageBoxes = useMemo(() =>
+        replaceImages.map((img, index) => <ImageBox key={index} image={img} index={index} rects={rectangles[`replaceImage-${index}`]} deleteImage={deleteImage} />)
+        , [replaceImages, rectangles])
 
     return <div className={style.replacedImages}>
         {imageBoxes}
