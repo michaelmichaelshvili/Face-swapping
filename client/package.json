@@ -11,8 +11,11 @@
   "author": "Michael Michaelshvili",
   "license": "ISC",
   "dependencies": {
+    "@mui/material": "^5.13.5",
+    "async-mutex": "^0.4.0",
     "axios": "^1.4.0",
     "classnames": "^2.3.2",
+    "merge-images": "^2.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "roughjs": "^4.5.2"

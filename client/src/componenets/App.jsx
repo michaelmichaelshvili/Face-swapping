@@ -9,10 +9,11 @@ import { ThingsProvider } from '../utils/ImagesContext';
 const App = () => {
     const [mainImage, setMainImage] = useState(null)
     const [replaceImages, setReplaceImages] = useState([])
-    const [rectangles, setRectangles] = useState([])
+    const [bboxes, setBboxes] = useState([])
+    const [faceImages, setFaceImages] = useState([])
     return (
         <div className={style.app}>
-            <ThingsProvider value={{ mainImage, setMainImage, replaceImages, setReplaceImages, rectangles, setRectangles }}>
+            <ThingsProvider value={{ mainImage, setMainImage, replaceImages, setReplaceImages, bboxes, setBboxes, faceImages, setFaceImages }}>
                 <MainImage />
                 <Matches />
                 <ReplacedImages />

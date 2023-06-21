@@ -1,0 +1,24 @@
+@exchangeLineHeight: 100%;
+@paddingTop: calc((6rem - 5rem)/2);
+.exchangeLine {
+    // line-height: @exchangeLineHeight;
+    height: 6rem;
+    border: 1px solid green;
+    display: flex;
+    justify-content: space-around;
+
+    .faceImage {
+        padding-top: @paddingTop;
+        padding-left: 6rem;
+        max-width: 5rem;
+        max-height: 5rem;
+        min-width: 3rem;
+        min-height: 3rem;
+    }
+
+    .dots{
+        padding-top: @paddingTop;
+        height: 1rem;
+        width: 7rem;
+    }
+}

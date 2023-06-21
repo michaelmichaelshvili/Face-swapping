@@ -1,11 +1,11 @@
-import React, { useCallback, useContext, useMemo, useRef } from 'react';
+import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
 import style from "./ReplacedImages.module.less"
 import ImageBox from './ImageBox/ImageBox.jsx';
 import ImagesContext from '../../utils/ImagesContext';
+import mergeImages from 'merge-images';
 
 const ReplacedImages = () => {
-    const { replaceImages, setReplaceImages, rectangles } = useContext(ImagesContext)
-
+    const { replaceImages, setReplaceImages, bboxes } = useContext(ImagesContext)
     const inputFileRef = useRef(null);
 
     const onSelect = (e) => {
@@ -19,11 +19,12 @@ const ReplacedImages = () => {
         setReplaceImages(temp)
     }
     const imageBoxes = useMemo(() =>
-        replaceImages.map((img, index) => <ImageBox key={index} image={img} index={index} rects={rectangles[`replaceImage-${index}`]} deleteImage={deleteImage} />)
-        , [replaceImages, rectangles])
+        replaceImages.map((img, index) => <ImageBox key={index} image={img} index={index} rects={bboxes[`replaceImage-${index}`]} deleteImage={deleteImage} />)
+        , [replaceImages, bboxes])
 
     return <div className={style.replacedImages}>
         {imageBoxes}
+
         <div className={style.addImageArea}>
 
             <label className={style.label} htmlFor="repImage"><img className={style.addImage} src={require("../../assets/plus.png").default} alt="upload" />הוסף תמונה</label>
