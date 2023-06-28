@@ -1,12 +1,13 @@
-import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import style from "./ReplacedImages.module.less"
-import ImageBox from './ImageBox/ImageBox.jsx';
+import ImageBox from '../ImageBox/ImageBox.jsx';
 import ImagesContext from '../../utils/ImagesContext';
 import mergeImages from 'merge-images';
-
+import { Mutex } from 'async-mutex';
 const ReplacedImages = () => {
-    const { replaceImages, setReplaceImages, bboxes } = useContext(ImagesContext)
+    const { replaceImages, setReplaceImages, bboxes, setBboxes, setReplacingImages } = useContext(ImagesContext)
     const inputFileRef = useRef(null);
+    const mutex = new Mutex();
 
     const onSelect = (e) => {
         if (e.target.files?.[0]) {
@@ -17,9 +18,31 @@ const ReplacedImages = () => {
         const temp = [...replaceImages]
         temp.splice(index, 1)
         setReplaceImages(temp)
+        const key = `replaceImage-${index}`
+        setBboxes({ ...bboxes, [key]: [] })
     }
+    const aRef = useRef([])
+
+    const afterImageCrop = (value) => {
+        aRef.current.push(value)
+        setReplacingImages(aRef.current)
+    }
+
+    const detectFaces = useCallback((e) => {
+        aRef.current = []
+    }, [])
+
+    useEffect(() => {
+        document.addEventListener("detectFaces", detectFaces)
+
+        return () => {
+            document.removeEventListener("detectFaces", detectFaces)
+        }
+    }, [detectFaces])
+
     const imageBoxes = useMemo(() =>
-        replaceImages.map((img, index) => <ImageBox key={index} image={img} index={index} rects={bboxes[`replaceImage-${index}`]} deleteImage={deleteImage} />)
+        replaceImages.map((img, index) => <ImageBox key={index} image={img} index={index} bboxes={bboxes[`replaceImage-${index}`]}
+            mutex={mutex} afterImageCrop={afterImageCrop} onDeleteClick={() => deleteImage(index)} />)
         , [replaceImages, bboxes])
 
     return <div className={style.replacedImages}>
