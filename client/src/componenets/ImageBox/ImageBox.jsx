@@ -35,7 +35,6 @@ const ImageBox = (props) => {
 
             const roughCanvas = rough.canvas(bboxCanvas);
 
-            // context.drawImage(imageRef.current, 0, 0, imageRef.current.width, imageRef.current.height)
             props.bboxes?.forEach((rect, index) => {
                 const [x, y, w, h] = rect
                 const [x1, y1, w1, h1] = [
@@ -44,7 +43,6 @@ const ImageBox = (props) => {
                     w / dimRatio.current.w, h / dimRatio.current.h]
 
                 const r = generator.rectangle(x1, y1, w1, h1)
-                // console.log(x1 + imageRef.current.getBoundingClientRect().x - bboxCanvasRef.current.getBoundingClientRect().x, y1 + imageRef.current.getBoundingClientRect().y - bboxCanvasRef.current.getBoundingClientRect().y, w1, h1);
 
                 roughCanvas.draw(r)
                 const image = new Image();
@@ -57,7 +55,7 @@ const ImageBox = (props) => {
                         cropCanvas.height = h;
                         context1.clearRect(0, 0, cropCanvas.width, cropCanvas.height);
                         context1.drawImage(image, x, y, w, h, 0, 0, w, h);
-                        props.afterImageCrop?.(cropCanvas.toDataURL())
+                        props.afterImageCrop?.(cropCanvas.toDataURL(), index)
                     })
                 };
             })

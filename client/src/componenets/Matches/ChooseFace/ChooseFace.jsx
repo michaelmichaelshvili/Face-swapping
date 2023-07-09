@@ -8,14 +8,15 @@ import { ClickAwayListener } from '@mui/material';
 import ImagesContext from '../../../utils/ImagesContext';
 const ChooseFace = (props) => {
 
-    const { replacingImages } = useContext(ImagesContext)
+    const { optionalFaces } = useContext(ImagesContext)
     const [open, setOpen] = useState(false)
     const [image, setImage] = useState(null)
     const ref = useRef(null)
 
     const onChooseImage = (e, index) => {
-        setImage(replacingImages[index])
+        setImage(optionalFaces[index])
         setOpen(false)
+        props.setChosenImage(optionalFaces[index])
     }
 
     return <div className={style.a} >
@@ -30,12 +31,12 @@ const ChooseFace = (props) => {
                 role: 'listbox',
             }}
         >
-            {replacingImages.map((option, index) => (
+            {optionalFaces.map((option, index) => (
                 <MenuItem
                     key={index}
                     onClick={(e) => { onChooseImage(e, index) }}
                 >
-                    {<img src={option} className={style.imageItem}/>}
+                    {<img src={option} className={style.imageItem} />}
                 </MenuItem>
             ))}
         </Menu>

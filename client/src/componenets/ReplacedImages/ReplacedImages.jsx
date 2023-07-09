@@ -2,13 +2,13 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import style from "./ReplacedImages.module.less"
 import ImageBox from '../ImageBox/ImageBox.jsx';
 import ImagesContext from '../../utils/ImagesContext';
-import mergeImages from 'merge-images';
 import { Mutex } from 'async-mutex';
 const ReplacedImages = () => {
-    const { replaceImages, setReplaceImages, bboxes, setBboxes, setReplacingImages } = useContext(ImagesContext)
+    const { replaceImages, setReplaceImages, bboxes, setBboxes, setOptionalFaces } = useContext(ImagesContext)
     const inputFileRef = useRef(null);
     const mutex = new Mutex();
 
+    const [x, setX] = useState(null)
     const onSelect = (e) => {
         if (e.target.files?.[0]) {
             setReplaceImages([...replaceImages, e.target.files[0]])
@@ -25,7 +25,7 @@ const ReplacedImages = () => {
 
     const afterImageCrop = (value) => {
         aRef.current.push(value)
-        setReplacingImages(aRef.current)
+        setOptionalFaces(aRef.current)
     }
 
     const detectFaces = useCallback((e) => {
@@ -44,6 +44,7 @@ const ReplacedImages = () => {
         replaceImages.map((img, index) => <ImageBox key={index} image={img} index={index} bboxes={bboxes[`replaceImage-${index}`]}
             mutex={mutex} afterImageCrop={afterImageCrop} onDeleteClick={() => deleteImage(index)} />)
         , [replaceImages, bboxes])
+    
 
     return <div className={style.replacedImages}>
         {imageBoxes}

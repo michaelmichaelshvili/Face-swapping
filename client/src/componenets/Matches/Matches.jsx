@@ -4,13 +4,12 @@ import ImagesContext from '../../utils/ImagesContext';
 import FaceExchangeLine from './FaceExchangeLine/FaceExchangeLine.jsx';
 
 const Matches = () => {
-    const { replaceImages, setReplaceImages, bboxes, mainImage, faceImages } = useContext(ImagesContext)
+    const { faceImages } = useContext(ImagesContext)
 
-    const faceBoxes = faceImages?.map((img, index) => <FaceExchangeLine key={index} image={img} />)
+    const faceExchangeLines = faceImages?.map(({ key, value }, index) => <FaceExchangeLine key={index} image={value} index={key} />)
 
     return <div className={style.matches}>
-        {faceBoxes}
-        {/* <div className={style.test}/> */}
+        {faceExchangeLines}
     </div>
 }
 
